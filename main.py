@@ -10,10 +10,10 @@ data = pandas.read_csv("data/german_words.csv")
 data_dict = data.to_dict(orient="records")
 
 
-def next_card(args):
+def next_card():
     current_card = random.choice(data_dict)
-    canvas.config(card_title, text="French")
-    canvas.config(card_word, text=current_card["French"])
+    canvas.itemconfig(card_title, text="German")
+    canvas.itemconfig(card_word, text=current_card["German"])
 
 
 # ---------------------- USER INTERFACE ----------------------
