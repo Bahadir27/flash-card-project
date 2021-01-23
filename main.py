@@ -6,9 +6,14 @@ BACKGROUND_COLOR = "#B1DDC6"
 
 # ---------------------- CREATE NEW FLASH CARDS ----------------------
 
-data = pandas.read_csv("data/german_words.csv")
-data_dict = data.to_dict(orient="records")
-current_card = {}
+try:
+    data = pandas.read_csv("data/words_to_learn.csv")
+except FileNotFoundError:
+    original_data = pandas.read_csv("data/german_words.csv")
+    data_dict = original_data.to_dict(orient="records")
+else:
+    data_dict = data.to_dict(orient="records")
+    current_card = {}
 
 
 def next_card():
@@ -30,6 +35,12 @@ def flip_card():
     canvas.itemconfig(card_title, text="English")
     canvas.itemconfig(card_word, text=current_card["English"])
 
+
+def is_known():
+    data_dict.remove(current_card)
+    data = pandas.DataFrame(data_dict)
+    data.to_csv("data/words_to_learn.csv", index=False)
+    next_card()
 
 # ---------------------- USER INTERFACE ----------------------
 
